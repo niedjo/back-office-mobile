@@ -1,50 +1,71 @@
-# Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# Back-Office Mobile
 
-## Get started
+Back-Office Mobile est la version mobile de l'interface back-office de mon portfolio web. Cette application permet de gérer mes projets, expériences, et les commentaires de mes clients, avec une charte graphique cohérente avec la version web, et une navigation fluide.
 
-1. Install dependencies
+## Fonctionnalités
 
+- **Gestion des projets** : Ajouter des projets directement depuis l'application.
+- **Gestion des expériences** : Enregistrez vos nouvelles expériences professionnelles ou personnelles.
+- **Gestion des commentaires** : Consultez et gérez les retours de vos clients sur leurs projets.
+
+## Technologies utilisées
+
+- **React Native** : Framework principal pour le développement de l'application mobile.
+- **Expo** : Utilisé pour simplifier le développement, le déploiement, et les tests de l'application.
+- **Expo Router** : Pour la gestion de la navigation au sein de l'application.
+- **Jest** : Pour les tests unitaires et de composants.
+- **NativeWind** : Utilisé pour le style de l'application. NativeWind combine la puissance de Tailwind CSS avec 
+
+l'écosystème React Native, offrant une approche de style utilitaire pour une personnalisation rapide et efficace.
+
+## Dépendances principales
+
+- `@react-native-picker/picker` : Sélecteur natif pour Android et iOS.
+- `expo-image-picker` : Pour sélectionner et gérer les images.
+- `expo-document-picker` : Pour la sélection de documents.
+- `react-navigation/native` : Pour la navigation fluide et intuitive au sein de l'application.
+- `react-native-reanimated` : Pour des animations performantes.
+
+## Scripts disponibles
+
+- `start` : Démarre l'application en mode développement.
+- `android` : Lance l'application sur un appareil ou émulateur Android.
+- `ios` : Lance l'application sur un appareil ou émulateur iOS.
+- `web` : Lance l'application sur le web.
+- `test` : Lance les tests avec Jest.
+- `lint` : Analyse le code pour détecter les problèmes de style et de syntaxe.
+
+## Installation
+
+Pour installer et exécuter cette application sur votre machine locale, suivez les étapes ci-dessous :
+
+1. **Clonez le dépôt** :
+   ```bash
+   git clone https://github.com/niedjo/back-office-mobile.git
+   cd back-office-mobile
+   ```
+
+2. **Installez les dépendances** :
+   Assurez-vous d'avoir Node.js installé sur votre machine. Ensuite, exécutez la commande suivante pour installer toutes les dépendances requises :
    ```bash
    npm install
    ```
 
-2. Start the app
-
+3. **Démarrez l'application** :
+   Après l'installation des dépendances, vous pouvez démarrer l'application avec la commande suivante :
    ```bash
-    npx expo start
+   npx expo start
    ```
+   Cela ouvrira Expo Developer Tools dans votre navigateur, où vous pouvez choisir d'exécuter l'application sur un appareil Android, iOS ou sur le web.
 
-In the output, you'll find options to open the app in a
+4. **Utilisation de l'API** :
+   Cette application utilise une API hébergée sur [api.niedjo-kuitche.onrender.com](https://api.niedjo-kuitche.onrender.com) pour gérer les données des projets, expériences, et commentaires des clients. 
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Contributions
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Les contributions sont les bienvenues ! N'hésitez pas à proposer des améliorations ou à signaler des bugs en ouvrant une issue ou en soumettant une pull request.
 
-## Get a fresh project
+## Licence
 
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Ce projet est sous licence ISC.
