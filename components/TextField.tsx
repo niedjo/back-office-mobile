@@ -23,10 +23,10 @@ const TextField = ({ label, type, value, onchange} : FormFieldType) => {
                 {   
                     !value ?
                     <TouchableOpacity 
-                        className='w-72 h-12 bg-black-200 text-white rounded-full pl-2'
+                        className='w-72 h-12 bg-black-200 flex justify-center rounded-full pl-2'
                         onPress={onchange as () => void}
                     >
-                        <Text className='text-white text-xl'>{label}</Text>
+                        <Text className='text-white text-xl text-center'>{label}</Text>
                     </TouchableOpacity>
                     :
                     <Image source={{ uri : value.uri }} width={200} height={200} resizeMode='contain'/>
@@ -42,7 +42,7 @@ const TextField = ({ label, type, value, onchange} : FormFieldType) => {
         : value;
         return (
             <View>
-                <View className='flex items-center gap-2 flex-wrap w-full py-4'>
+                <View className='flex flex-row items-center gap-2 flex-wrap w-full py-4'>
                     {
                         Array.isArray(value) && value.map(st => (
                             <Text key={st.id} className='text-white-100'>{st.st}</Text>
@@ -55,9 +55,10 @@ const TextField = ({ label, type, value, onchange} : FormFieldType) => {
                         <RNPickerSelect
                             onValueChange={onchange}
                             items={[
-                                { label: 'Football', value: 'football' },
-                                { label: 'Baseball', value: 'baseball' },
-                                { label: 'Hockey', value: 'hockey' },
+                                { label: 'React Native', value: 'react native' },
+                                { label: 'React js', value: 'react js' },
+                                { label: 'Next js', value: 'next js' },
+                                { label: 'Node js', value: 'node js' },
                             ]}
                         />
                     </View>

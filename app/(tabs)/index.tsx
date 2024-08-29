@@ -1,4 +1,4 @@
-import { View, Text, TextInput, ScrollView } from 'react-native'
+import { View, Text, TextInput, ScrollView, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ProjectType, Stack } from '@/types';
@@ -82,14 +82,23 @@ const Project = () => {
     
     // Vérification si le fichier n'est pas null avant de l'ajouter au FormData
     if (project.file) {
-        formData.append('imgUrlOfProjet', project.file);
+      const localUri = project.file.uri;
+      const filename = localUri.split('/').pop();
+      const match = /\.(\w+)$/.exec(filename || '');
+      const type = match ? `image/${match[1]}` : 'image';
+
+      // Ajout du fichier à FormData
+      formData.append('imgUrlOfProjet', {
+        uri: localUri,
+        name: filename || 'photo.jpg',
+        type,
+      } as any);
     }
     
     try {
         const response = await fetch('https://api-niedjo-kuitche.onrender.com/projet', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${project.BearerToken}`
             },
             body: formData
@@ -102,7 +111,10 @@ const Project = () => {
         const data = await response.json();
         console.log('Réponse de l\'API:', data);
 
+        Alert.alert("Succes", "Experiance sent succesfuly")
+
       } catch (error) {
+        Alert.alert("Chess", "invalid token")
         console.error('Erreur lors de l\'envoi des données:', error);
       }
       finally {

@@ -1,9 +1,9 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import SubmitButton from '@/components/SubmitButton'
 import TextField from '@/components/TextField'
-import { CommentType } from '@/types'
+import { CommentType, Stack } from '@/types'
 import * as ImagePicker from 'expo-image-picker'
 
 const Comment = () => {
@@ -49,8 +49,19 @@ const Comment = () => {
     formData.append('comment', commentData.comment);
     
     // Vérification si le fichier n'est pas null avant de l'ajouter au FormData
+
     if (commentData.file) {
-        formData.append('profileUrl', commentData.file);
+      const localUri = commentData.file.uri;
+      const filename = localUri.split('/').pop();
+      const match = /\.(\w+)$/.exec(filename || '');
+      const type = match ? `image/${match[1]}` : 'image';
+
+      // Ajout du fichier à FormData
+      formData.append('profileUrl', {
+        uri: localUri,
+        name: filename || 'photo.jpg',
+        type,
+      } as any);
     }
     
     try {
@@ -67,8 +78,11 @@ const Comment = () => {
         }
 
         const data = await response.json();
+        Alert.alert("Succes", "Comment sent succesfuly")
+
         console.log('Réponse de l\'API:', data);
       } catch (error) {
+        Alert.alert("Chess", "invalid token")
         console.error('Erreur lors de l\'envoi des données:', error);
       }
       finally {
@@ -93,19 +107,19 @@ const Comment = () => {
                 label='People Name :'
                 type='text'
                 value={comment.peopleName}
-                onchange={(value : string) => handleChange('projectName', value)}
+                onchange={(value : string) => handleChange('peopleName', value)}
               />
               <TextField 
                 label='People Workstation :'
                 type='text'
                 value={comment.peopleWorkstation}
-                onchange={(value : string) => handleChange('description', value)}
+                onchange={(value : string) => handleChange('peopleWorkstation', value)}
               />
               <TextField 
                 label='Comment :'
                 type='textarea'
                 value={comment.comment}
-                onchange={(value : string) => handleChange('fullDescription', value)}
+                onchange={(value : string) => handleChange('comment', value)}
               />
               
               <TextField 

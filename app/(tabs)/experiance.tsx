@@ -1,7 +1,7 @@
-import { View, Text, ScrollView } from 'react-native'
+import { View, Text, ScrollView, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { ExperianceType } from '@/types';
+import { ExperianceType, Stack } from '@/types';
 import * as ImagePicker from 'expo-image-picker'
 import TextField from '@/components/TextField';
 import SubmitButton from '@/components/SubmitButton';
@@ -26,6 +26,7 @@ const Experiance = () => {
  const handleFileChange = async () => {
    const result = await ImagePicker.launchImageLibraryAsync({
      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    //  allowsEditing : true,
      aspect: [4, 3],
      quality: 1,
    });
@@ -34,7 +35,7 @@ const Experiance = () => {
            ...prevState,
            file: result.assets[0],
        }));
-     }
+    }
  };
  // we sublit our experiance
  async function handleSubmitExperiance() {
@@ -43,16 +44,26 @@ const Experiance = () => {
    formData.append('experianceName', experianceData.experianceName);
    formData.append('description', experianceData.description);
    
-   // Vérification si le fichier n'est pas null avant de l'ajouter au FormData
-   if (experianceData.file) {
-       formData.append('imgUrlOfExperiance', experianceData.file);
-   }
+    // Vérification si le fichier n'est pas null avant de l'ajouter au FormData
+    if (experianceData.file) {
+      const localUri = experianceData.file.uri;
+      const filename = localUri.split('/').pop();
+      const match = /\.(\w+)$/.exec(filename || '');
+      const type = match ? `image/${match[1]}` : 'image';
+
+      // Ajout du fichier à FormData
+      formData.append('imgUrlOfExperiance', {
+        uri: localUri,
+        name: filename || 'photo.jpg',
+        type,
+      } as any);
+    }
    
    try {
        const response = await fetch('https://api-niedjo-kuitche.onrender.com/experiance', {
            method: 'POST',
            headers: {
-               'Authorization': `Bearer ${experianceData.BearerToken}`
+              'Authorization': `Bearer ${experianceData.BearerToken}`
            },
            body: formData
        });
@@ -63,7 +74,11 @@ const Experiance = () => {
 
        const data = await response.json();
        console.log('Réponse de l\'API:', data);
-     } catch (error) {
+
+       Alert.alert("Succes", "Experiance sent succesfuly")
+       
+      } catch (error) {
+       Alert.alert("Chess", "invalid token")
        console.error('Erreur lors de l\'envoi des données:', error);
      }
      finally {
@@ -86,7 +101,7 @@ const Experiance = () => {
                 label='Experiance Name :'
                 type='text'
                 value={experiance.experianceName}
-                onchange={(value : string) => handleChange('projectName', value)}
+                onchange={(value : string) => handleChange('experianceName', value)}
               />
               <TextField 
                 label='Description :'
